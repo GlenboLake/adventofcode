@@ -2,7 +2,7 @@ package adventofcode
 
 import scala.io.Source
 
-object Day9 extends App {
+object Day09 extends App {
   type City = String
   type PathMap = Map[Tuple2[City, City], Int]
   var cities: List[City] = Nil

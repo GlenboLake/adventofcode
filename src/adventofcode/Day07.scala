@@ -3,7 +3,7 @@ package adventofcode
 import scala.io.Source
 import scala.util.control.Breaks.break
 
-object Day7 extends App {
+object Day07 extends App {
   val input = Source.fromFile("day7.txt").getLines.toList
   //  List("123 -> x", "456 -> y", "x AND y -> d", "x OR y -> e", "x LSHIFT 2 -> f", "y RSHIFT 2 -> g", "NOT x -> h", "NOT y -> i")
 

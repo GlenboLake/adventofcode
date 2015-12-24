@@ -3,7 +3,7 @@ package adventofcode
 import scala.io.Source
 
 
-object Day2 extends App {
+object Day02 extends App {
   var input = Source.fromFile("day2.txt")
   var total_paper = 0
   var total_ribbon = 0

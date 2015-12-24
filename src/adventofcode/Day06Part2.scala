@@ -1,25 +1,22 @@
 package adventofcode
 
 import scala.io.Source
-import scala.util.control.Breaks._
 
-class Light(var state: Boolean = false) {
+class AdjustableLight(var state: Int = 0) {
   def turnOn(): Unit = {
-    state = true
+    state += 1
   }
   def turnOff(): Unit = {
-    state = false
+    state -= 1
+    if (state < 0) state = 0
   }
   def toggle(): Unit = {
-    state = !state
-  }
-  override def toString() = {
-    if (state) "*" else "."
+    state += 2
   }
 }
 
-object Day6 extends App {
-  type Grid = Map[Tuple2[Int, Int], Light]
+object Day06Part2 extends App {
+  type Grid = Map[Tuple2[Int, Int], AdjustableLight]
   var grid: Grid = Map.empty
   val input = Source.fromFile("day6.txt").getLines()
 
@@ -36,12 +33,14 @@ object Day6 extends App {
   }
   
   def pop(): Int = {
-    grid.values.count { L: Light => L.state }
+    var total = 0
+    for (light <- grid.values) total += light.state
+    total
   }
 
   for (x <- 0 to 999) {
     for (y <- 0 to 999) {
-      grid += ((x, y) -> new Light)
+      grid += ((x, y) -> new AdjustableLight)
     }
   }
   for (line <- input) {

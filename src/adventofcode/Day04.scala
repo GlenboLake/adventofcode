@@ -2,7 +2,7 @@ package adventofcode
 
 import java.security.MessageDigest
 
-object Day4 extends App {
+object Day04 extends App {
   def md5(s: String) = MessageDigest.getInstance("MD5").digest(s.getBytes).map("%02X" format _).mkString
   val input = "ckczppom"
   

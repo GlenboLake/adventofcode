@@ -2,7 +2,7 @@ package adventofcode
 
 import scala.io.Source
 
-object Day1 extends App {
+object Day01 extends App {
   val input = Source.fromFile("day1.txt").mkString
   var floor: Int = 0
   var index: Int = 0

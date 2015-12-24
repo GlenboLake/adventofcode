@@ -2,7 +2,7 @@ package adventofcode
 
 import scala.io.Source
 
-object Day3 extends App {
+object Day03 extends App {
   type Point = Tuple2[Int, Int]
 
   var santa = new Point(0, 0)
