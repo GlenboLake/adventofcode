@@ -34,19 +34,21 @@ def part2_sim(num_elves):
 
 def part2(num_elves):
     n = 1
-    inc = 1
-    prev_max = 1
-    for i in range(1, num_elves+2):  # Not sure why I need an extra iteration for the right answer.
-        if n >= prev_max:
-            inc = 2
+    inc = 0
+    for i in range(1, num_elves + 1):
         n += inc
-        if n >= i:
-            prev_max = i - inc
-            n = 1
-            inc = 1
-        # print(i, n)
+        if i == 2 * n:
+            inc = 2
+        elif i == n:
+            inc = 1 - n  # Set inc so that next n is 1
+        elif n == 1:
+            inc = 1  # Following a reset to 1, set inc to 1
     return n
 
 
+# for i in range(1, 20):
+#     print(i, part1_sim(i))
 print(part1(3012210))
+# for i in range(1, 20):
+#     print(i, part2_sim(i))
 print(part2(3012210))
