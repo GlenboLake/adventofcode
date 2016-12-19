@@ -10,11 +10,8 @@ def next_row(traps):
 
 row = '.^^^.^.^^^.^.......^^.^^^^.^^^^..^^^^^.^.^^^..^^.^.^^..^.^..^^...^.^^.^^^...^^.^.^^^..^^^^.....^....'
 safe = row.count('.')
-for _ in range(39):
+for i in range(40000):
+    if i + 1 in (40, 40000):
+        print(safe)
     row = next_row(row)
     safe += row.count('.')
-print(safe)
-for _ in range(400000-40):
-    row = next_row(row)
-    safe += row.count('.')
-print(safe)
