@@ -74,14 +74,14 @@ def run_program(instructions, init_a, maxlen=100):
     while current_line is not None and 0 <= current_line < len(instructions):
         current_line = execute_command(current_line)
         if len(seq) >= maxlen:
-            print(init_a)
-            break
+            return init_a
 
 
 with open('day25.txt') as f:
     commands = f.read().splitlines()
 
-run_program(commands, 180, 5000)
-for a in range(5000):
-    run_program(commands, a)
+a = 1
+while not run_program(commands, a):
+    a += 1
+print(a)
 
