@@ -22,10 +22,6 @@ def cycle(nums, inputs, i=0, skip=0):
     return nums, i, skip
 
 
-p1 = cycle(range(256), map(int, input_.split(',')))[0]
-print('Part 1:', p1[0] * p1[1])
-
-
 def encode(nums):
     return list(map(ord, nums)) + [17, 31, 73, 47, 23]
 
@@ -45,4 +41,7 @@ assert knot_hash('AoC 2017') == '33efeb34ea91902bb2f59c9920caa6cd'
 assert knot_hash('1,2,3') == '3efbe78a8d82f29979031a4aa0b16a9d'
 assert knot_hash('1,2,4') == '63960835bcdc130f0b66d7ff4f6a5a8e'
 
-print('Part 2:', knot_hash(input_))
+if __name__ == '__main__':
+    p1 = cycle(range(256), map(int, input_.split(',')))[0]
+    print('Part 1:', p1[0] * p1[1])
+    print('Part 2:', knot_hash(input_))
