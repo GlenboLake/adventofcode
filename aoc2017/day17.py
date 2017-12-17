@@ -13,7 +13,7 @@ def part1():
 def part2():
     value = 0
     pos = 0
-    for i in range(1, 50000000):
+    for i in range(1, 50000001):
         pos = (pos + jump) % i + 1
         if pos == 1:
             value = i
@@ -21,8 +21,5 @@ def part2():
 
 
 if __name__ == '__main__':
-    from time import time
-    start = time()
     print('Part 1:', part1())
     print('Part 2:', part2())
-    print(time()-start)
