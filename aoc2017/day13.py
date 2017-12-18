@@ -1,4 +1,4 @@
-with open(r'D:\workspace\adventofcode\2017\day13.in') as f:
+with open('day13.in') as f:
     layers = dict(map(int, line.split(': ')) for line in f)
 
 
