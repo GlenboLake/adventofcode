@@ -1,8 +1,5 @@
 from timeit import timeit
 
-with open('day11.in') as f:
-    path = f.read().split(',')
-
 
 def measure(steps):
     x = y = 0
@@ -71,6 +68,9 @@ assert measure_xyz(['ne', 'ne', 's', 's'])[0] == 2
 assert measure_xyz(['se', 'sw', 'se', 'sw', 'sw'])[0] == 3
 
 if __name__ == '__main__':
+    with open('day11.in') as f:
+        path = f.read().split(',')
+
     print('Part 1: {}\nPart 2: {}'.format(*measure(path)))
     print(timeit('measure(path)', setup='from __main__ import measure, path', number=1000))
 

@@ -13,9 +13,10 @@ def navigate(jumps, limit=None):
     return count
 
 
-assert navigate([0, 3, 0, 1, -3]) == 5
-assert navigate([0, 3, 0, 1, -3], 3) == 10
+if __name__ == '__main__':
+    assert navigate([0, 3, 0, 1, -3]) == 5
+    assert navigate([0, 3, 0, 1, -3], 3) == 10
 
-nums = list(map(int, open('day5.txt').read().splitlines()))
-print('Part 1:', navigate(nums))
-print('Part 2:', navigate(nums, 3))
+    nums = list(map(int, open('day5.txt').read().splitlines()))
+    print('Part 1:', navigate(nums))
+    print('Part 2:', navigate(nums, 3))

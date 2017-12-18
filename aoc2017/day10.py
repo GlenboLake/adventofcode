@@ -1,7 +1,5 @@
 from functools import reduce
 
-input_ = '187,254,0,81,169,219,1,190,19,102,255,56,46,32,2,216'
-
 
 def shift(list_, amount):
     return list_[amount:] + list_[:amount]
@@ -42,6 +40,8 @@ assert knot_hash('1,2,3') == '3efbe78a8d82f29979031a4aa0b16a9d'
 assert knot_hash('1,2,4') == '63960835bcdc130f0b66d7ff4f6a5a8e'
 
 if __name__ == '__main__':
+    input_ = '187,254,0,81,169,219,1,190,19,102,255,56,46,32,2,216'
+
     p1 = cycle(range(256), map(int, input_.split(',')))[0]
     print('Part 1:', p1[0] * p1[1])
     print('Part 2:', knot_hash(input_))

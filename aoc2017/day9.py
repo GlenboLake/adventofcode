@@ -1,9 +1,3 @@
-import re
-
-with open('day9.in') as f:
-    input_ = f.read().strip()
-
-
 def score(text):
     total = 0
     depth = 0
@@ -30,21 +24,24 @@ def score(text):
     return total, garbage_count
 
 
-assert score('{}')[0] == 1
-assert score('{{{}}}')[0] == 6
-assert score('{{},{}}')[0] == 5
-assert score('{{{},{},{{}}}})')[0] == 16
-assert score('{<a>,<a>,<a>,<a>}')[0] == 1
-assert score('{{<ab>},{<ab>},{<ab>},{<ab>}}')[0] == 9
-assert score('{{<!!>},{<!!>},{<!!>},{<!!>}}')[0] == 9
-assert score('{{<a!>},{<a!>},{<a!>},{<ab>}} ')[0] == 3
+if __name__ == '__main__':
+    assert score('{}')[0] == 1
+    assert score('{{{}}}')[0] == 6
+    assert score('{{},{}}')[0] == 5
+    assert score('{{{},{},{{}}}})')[0] == 16
+    assert score('{<a>,<a>,<a>,<a>}')[0] == 1
+    assert score('{{<ab>},{<ab>},{<ab>},{<ab>}}')[0] == 9
+    assert score('{{<!!>},{<!!>},{<!!>},{<!!>}}')[0] == 9
+    assert score('{{<a!>},{<a!>},{<a!>},{<ab>}} ')[0] == 3
 
-print(score(input_))
+    assert score('<>')[1] == 0
+    assert score('<random characters>')[1] == 17
+    assert score('<<<<>')[1] == 3
+    assert score('<{!>}>')[1] == 2
+    assert score('<!!>')[1] == 0
+    assert score('<!!!>>')[1] == 0
+    assert score('<{o"i!a,<{i<a>')[1] == 10
 
-assert score('<>')[1] == 0
-assert score('<random characters>')[1] == 17
-assert score('<<<<>')[1] == 3
-assert score('<{!>}>')[1] == 2
-assert score('<!!>')[1] == 0
-assert score('<!!!>>')[1] == 0
-assert score('<{o"i!a,<{i<a>')[1] == 10
+    with open('day9.in') as f:
+        input_ = f.read().strip()
+    print(score(input_))

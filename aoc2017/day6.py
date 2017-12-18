@@ -19,5 +19,6 @@ def realloc(init):
     return len(states), len(states) - states.index(new_state)
 
 
-assert realloc([0, 2, 7, 0]) == (5, 4)
-print('Part 1: {}\nPart 2: {}'.format(*realloc(input_)))
+if __name__ == '__main__':
+    assert realloc([0, 2, 7, 0]) == (5, 4)
+    print('Part 1: {}\nPart 2: {}'.format(*realloc(input_)))

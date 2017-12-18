@@ -1,7 +1,3 @@
-with open('day13.in') as f:
-    layers = dict(map(int, line.split(': ')) for line in f)
-
-
 def calc_sev(delay):
     severity = sum(k * v if (k + delay) % (2 * (v - 1)) == 0 else 0 for k, v in layers.items())
     if severity == 0 and delay % (2 * (layers[0] - 1)) == 0:
@@ -9,8 +5,12 @@ def calc_sev(delay):
     return severity
 
 
-print('Part 1:', calc_sev(0))
-delay = 0
-while calc_sev(delay):
-    delay += 1
-print('Part 2:', delay)
+if __name__ == '__main__':
+    with open('day13.in') as f:
+        layers = dict(map(int, line.split(': ')) for line in f)
+
+    print('Part 1:', calc_sev(0))
+    delay = 0
+    while calc_sev(delay):
+        delay += 1
+    print('Part 2:', delay)
