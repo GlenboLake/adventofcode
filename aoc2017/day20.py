@@ -1,5 +1,6 @@
 import re
 from collections import namedtuple
+from time import time
 
 Particle = namedtuple('Particle', ['pos', 'vel', 'acc'])
 
@@ -28,9 +29,10 @@ if __name__ == '__main__':
     particles = [parse_particle(line) for line in open('day20.in')]
 
     orig = particles.copy()
-
-    for _ in range(1000):
+    start = time()
+    for i in range(1000):
         particles = [move_particle(p) for p in particles]
+        print(i, particles.index(min(particles, key=manhattan)))
     print(particles.index(min(particles, key=manhattan)))
 
     particles = orig.copy()
@@ -40,3 +42,4 @@ if __name__ == '__main__':
             particles = [part for part, pos in zip(particles, positions) if positions.count(pos) == 1]
             print(len(particles))
         particles = [move_particle(p) for p in particles]
+    print(f'Took {time()-start}s')
