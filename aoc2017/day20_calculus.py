@@ -1,89 +1,37 @@
 import re
 from cmath import sqrt
-from collections import defaultdict
+from collections import defaultdict, namedtuple
 from functools import reduce
 from itertools import combinations
 from time import time
 
+Particle = namedtuple('Particle', ['pos', 'vel', 'acc'])
+
 
 def parse_particle(line):
     pos_match = re.search('p=<(-?\d+),(-?\d+),(-?\d+)>', line)
-    position = Point3D(int(pos_match.group(1)), int(pos_match.group(2)), int(pos_match.group(3)))
+    position = (int(pos_match.group(1)), int(pos_match.group(2)), int(pos_match.group(3)))
     vel_match = re.search('v=<(-?\d+),(-?\d+),(-?\d+)>', line)
-    velocity = Point3D(int(vel_match.group(1)), int(vel_match.group(2)), int(vel_match.group(3)))
+    velocity = (int(vel_match.group(1)), int(vel_match.group(2)), int(vel_match.group(3)))
     acc_match = re.search('a=<(-?\d+),(-?\d+),(-?\d+)>', line)
-    acceleration = Point3D(int(acc_match.group(1)), int(acc_match.group(2)), int(acc_match.group(3)))
+    acceleration = (int(acc_match.group(1)), int(acc_match.group(2)), int(acc_match.group(3)))
     return Particle(position, velocity, acceleration)
 
 
-class Point3D(object):
-    def __init__(self, x, y, z):
-        self.x = x
-        self.y = y
-        self.z = z
-
-    def manhattan(self):
-        return abs(self.x) + abs(self.y) + abs(self.z)
-
-    def __eq__(self, other):
-        if isinstance(other, Point3D):
-            return self.x == other.x and self.y == other.y and self.z == other.z
-        else:
-            return False
-
-    def __hash__(self):
-        return hash(tuple([self.x, self.y, self.z]))
-
-    def __add__(self, other):
-        if isinstance(other, Point3D):
-            return Point3D(self.x + other.x, self.y + other.y, self.z + other.z)
-        else:
-            raise TypeError('Can only add points to other points')
-
-    def __sub__(self, other):
-        if isinstance(other, Point3D):
-            return Point3D(self.x - other.x, self.y - other.y, self.z - other.z)
-        else:
-            raise TypeError('Can only subtract other points from points')
-
-    def __mul__(self, other):
-        if isinstance(other, (int, float)):
-            return Point3D(self.x * other, self.y * other, self.z * other)
-        else:
-            raise TypeError('Can only multiply point by scalar')
-
-    def __truediv__(self, other):
-        if isinstance(other, (int, float)):
-            return Point3D(self.x / other, self.y / other, self.z / other)
-        else:
-            raise TypeError('Can only divide point by scalar')
-
-    def __floordiv__(self, other):
-        if isinstance(other, (int, float)):
-            return Point3D(self.x // other, self.y // other, self.z // other)
-        else:
-            raise TypeError('Can only divide point by scalar')
-
-    def __str__(self):
-        return f'({self.x}, {self.y}, {self.z})'
+def particle_at(particle, t):
+    x = particle.pos[0] + particle.vel[0] * t + particle.acc[0] * t * (t + 1) // 2
+    y = particle.pos[1] + particle.vel[1] * t + particle.acc[1] * t * (t + 1) // 2
+    z = particle.pos[2] + particle.vel[2] * t + particle.acc[2] * t * (t + 1) // 2
+    return x, y, z
 
 
-class Particle(object):
-    def __init__(self, pos, vel, acc):
-        self.pos = pos
-        self.vel = vel
-        self.acc = acc
-
-    def pos_at(self, t):
-        return self.pos + self.vel * t + self.acc * t * (t + 1) // 2
-
-    def __str__(self):
-        return f'{self.pos}/{self.vel}/{self.acc}'
+def manhattan(point):
+    return sum(map(abs, point))
 
 
 def part1(particles):
-    max_accel = max(abs(p.acc.x) + abs(p.acc.y) + abs(p.acc.z) for p in particles)
-    return particles.index(min(particles, key=lambda p: p.pos_at(100 * max_accel).manhattan()))
+    max_accel = max(sum(map(abs, p.acc)) for p in particles)
+    return particles.index(min(particles, key=lambda p: manhattan(particle_at(p, 100 * max_accel))))
 
 
 def will_collide(p1, p2):
@@ -102,11 +50,13 @@ def will_collide(p1, p2):
             solutions = set(map(lambda x: int(x.real), filter(is_int, solutions)))
         return solutions
 
-    diff = Particle(p1.pos - p2.pos, p1.vel - p2.vel, p1.acc - p2.acc)
+    diff = Particle(tuple(a - b for a, b in zip(p1.pos, p2.pos)),
+                    tuple(a - b for a, b in zip(p1.vel, p2.vel)),
+                    tuple(a - b for a, b in zip(p1.acc, p2.acc)))
     tuples = [
-        (diff.acc.x, diff.vel.x, diff.pos.x),
-        (diff.acc.y, diff.vel.y, diff.pos.y),
-        (diff.acc.z, diff.vel.z, diff.pos.z),
+        (diff.acc[0], diff.vel[0], diff.pos[0]),
+        (diff.acc[1], diff.vel[1], diff.pos[1]),
+        (diff.acc[2], diff.vel[2], diff.pos[2]),
     ]
     solutions = reduce(lambda a, b: a & b,
                        filter(lambda s: s is not None,

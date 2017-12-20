@@ -32,7 +32,6 @@ if __name__ == '__main__':
     start = time()
     for i in range(1000):
         particles = [move_particle(p) for p in particles]
-        print(i, particles.index(min(particles, key=manhattan)))
     print(particles.index(min(particles, key=manhattan)))
 
     particles = orig.copy()
@@ -40,6 +39,6 @@ if __name__ == '__main__':
         if len(set(p.pos for p in particles)) < len(particles):
             positions = [p.pos for p in particles]
             particles = [part for part, pos in zip(particles, positions) if positions.count(pos) == 1]
-            print(len(particles))
         particles = [move_particle(p) for p in particles]
+    print(len(particles))
     print(f'Took {time()-start}s')
