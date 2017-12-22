@@ -22,7 +22,7 @@ def find_rule(key, rules):
     raise ValueError(f'No rule found for {key}')
 
 
-def part1(grid, rules, iterations=5):
+def solve(grid, rules, iterations=5):
     for i in range(iterations):
         size = len(grid)
         new_grid = []
@@ -55,6 +55,6 @@ if __name__ == '__main__':
         '.#./..#/###': '#..#/..../..../#..#'
     }
 
-    assert part1(start, sample_rules, 2) == 12
-    print(part1(start, my_rules, 5))
-    print(part1(start, my_rules, 18))
+    assert solve(start, sample_rules, 2) == 12
+    print('Part 1', solve(start, my_rules, 5))
+    print('Part 2', solve(start, my_rules, 18))
